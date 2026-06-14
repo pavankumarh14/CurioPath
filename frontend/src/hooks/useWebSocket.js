@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
-const WS_URL      = `ws://${window.location.host}/ws`;
+const WS_PROTOCOL = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+const WS_URL      = `${WS_PROTOCOL}${window.location.host}/ws`;
 const MAX_BACKOFF = 30_000;
 
 export function useWebSocket() {
