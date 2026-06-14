@@ -60,9 +60,12 @@ export function CurriculumDAG({ subTopics = [], dag }) {
       .data(nodes)
       .join('g')
       .on('mouseover', (event, d) => {
+        const rect = svgRef.current.getBoundingClientRect();
+        const x = event.clientX - rect.left + 10;
+        const y = event.clientY - rect.top + 10;
         setTooltip({
-          x: event.pageX + 10,
-          y: event.pageY + 10,
+          x,
+          y,
           name: d.name,
           objectives: d.objectives,
           estimated_hours: d.estimated_hours,

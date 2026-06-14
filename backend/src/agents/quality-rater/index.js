@@ -12,7 +12,7 @@ const QUALITY_THRESHOLD  = 5.0;
 async function runQualityRater(task) {
   const startTime = Date.now();
   const { dagId, goalId, goal, context } = task;
-  const sourcesBySubtopic = context.sourceFinding.details.sources_by_subtopic;
+  const sourcesBySubtopic = context.sourcefinderFinding.details.sources_by_subtopic;
   const allSources = [];
   for (const sbst of sourcesBySubtopic) {
     for (const s of sbst.sources) {
