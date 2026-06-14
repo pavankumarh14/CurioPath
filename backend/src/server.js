@@ -125,10 +125,10 @@ app.get('*', (_req, res) => {
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   const hasKey = !!process.env.GROQ_API_KEY;
-  console.log(`\n📚 CurioPath backend → http://localhost:${PORT}`);
-  console.log(`   WebSocket        → ws://localhost:${PORT}/ws`);
+  console.log(`\n📚 CurioPath backend → http://0.0.0.0:${PORT}`);
+  console.log(`   WebSocket        → ws://0.0.0.0:${PORT}/ws`);
   console.log(`   Groq key         → ${hasKey ? '✅ set' : '❌ NOT SET — add GROQ_API_KEY to backend/.env'}\n`);
   if (!hasKey) console.warn('   ⚠️  Get a free key at https://console.groq.com\n');
 });
