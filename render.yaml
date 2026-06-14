@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: curiopath
+    runtime: node
+    repo: https://github.com/your-username/your-repo-name # Replace with your repo
+    plan: free
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: NODE_VERSION
+        value: 22

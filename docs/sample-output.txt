@@ -1,0 +1,487 @@
+CurioPath — Sample Pipeline Outputs
+======================================
+Use this as a reference when implementing the Source-Finder, Quality-Rater,
+and Sequencer agents. Your output shape should match what is shown here.
+
+Goal used for this example:
+  Topic:          "Learn React"
+  Level:          intermediate
+  Hours per week: 10
+  Duration:       4 weeks
+  Formats:        video, article, course
+
+======================================
+PHASE 1 — Scoper Agent Output (built — reference)
+======================================
+
+The Scoper decomposes "Learn React" into sub-topics with objectives,
+prerequisites, and time estimates.
+
+Finding summary:
+  "Decomposed 'Learn React' into 6 sub-topics (22 hrs total)"
+
+details.sub_topics:
+[
+  {
+    "id": "subtopic-001",
+    "name": "JavaScript ES6+ Fundamentals",
+    "objectives": [
+      "Use arrow functions, destructuring, and spread syntax confidently",
+      "Understand closures, promises, and async/await",
+      "Work with ES modules (import/export)"
+    ],
+    "estimated_hours": 4,
+    "prerequisites": []
+  },
+  {
+    "id": "subtopic-002",
+    "name": "JSX and Component Basics",
+    "objectives": [
+      "Write functional components using JSX",
+      "Understand the virtual DOM and reconciliation",
+      "Pass and render props correctly"
+    ],
+    "estimated_hours": 3,
+    "prerequisites": ["JavaScript ES6+ Fundamentals"]
+  },
+  {
+    "id": "subtopic-003",
+    "name": "State and Event Handling",
+    "objectives": [
+      "Manage local state with useState",
+      "Handle user events (onClick, onChange, onSubmit)",
+      "Lift state up between parent and child components"
+    ],
+    "estimated_hours": 4,
+    "prerequisites": ["JSX and Component Basics"]
+  },
+  {
+    "id": "subtopic-004",
+    "name": "Hooks and Side Effects",
+    "objectives": [
+      "Fetch data with useEffect and handle cleanup",
+      "Build custom hooks to reuse stateful logic",
+      "Understand the rules of hooks"
+    ],
+    "estimated_hours": 4,
+    "prerequisites": ["State and Event Handling"]
+  },
+  {
+    "id": "subtopic-005",
+    "name": "React Router",
+    "objectives": [
+      "Set up client-side routing with React Router v6",
+      "Build nested routes and dynamic URL parameters",
+      "Use useNavigate and useParams hooks"
+    ],
+    "estimated_hours": 3,
+    "prerequisites": ["JSX and Component Basics"]
+  },
+  {
+    "id": "subtopic-006",
+    "name": "State Management",
+    "objectives": [
+      "Share global state using Context API",
+      "Understand when to reach for an external library",
+      "Implement basic Zustand store"
+    ],
+    "estimated_hours": 4,
+    "prerequisites": ["Hooks and Side Effects"]
+  }
+]
+
+details.total_estimated_hours: 22
+details.recommendation: "Start with JS fundamentals even at intermediate level —
+                          React's behaviour is much clearer when closures and
+                          async patterns are solid."
+
+
+======================================
+PHASE 2 — Source-Finder Agent Output (YOUR TASK)
+======================================
+
+The Source-Finder queries the mock pool (getSourcePool("react")), scores
+each source for relevance to each sub-topic by keyword overlap, and saves
+sources to SQLite grouped by sub-topic.
+
+Finding summary:
+  "Found 14 sources across 6 sub-topics for 'Learn React'"
+
+details.sources_by_subtopic:
+[
+  {
+    "sub_topic_id": "subtopic-001",
+    "sub_topic_name": "JavaScript ES6+ Fundamentals",
+    "source_count": 2,
+    "sources": [
+      {
+        "title": "JavaScript.info — Modern JavaScript",
+        "url": "https://javascript.info",
+        "type": "article",
+        "author": "Ilya Kantor",
+        "platform": "javascript.info",
+        "description": "Best free JS reference. Essential prerequisites for React."
+      },
+      {
+        "title": "Fireship — React in 100 Seconds",
+        "url": "https://youtu.be/Tn6-PIqc4UM",
+        "type": "video",
+        "author": "Fireship",
+        "platform": "YouTube",
+        "description": "Sharp overview of core React concepts including JSX and components."
+      }
+    ]
+  },
+  {
+    "sub_topic_id": "subtopic-002",
+    "sub_topic_name": "JSX and Component Basics",
+    "source_count": 3,
+    "sources": [
+      {
+        "title": "React Official Documentation",
+        "url": "https://react.dev",
+        "type": "documentation",
+        "author": "React Team",
+        "platform": "react.dev",
+        "description": "The authoritative source. New docs are outstanding."
+      },
+      {
+        "title": "Scrimba — Learn React for Free",
+        "url": "https://scrimba.com/learn/learnreact",
+        "type": "course",
+        "author": "Bob Ziroll",
+        "platform": "Scrimba",
+        "description": "Interactive coding course, excellent for beginners and intermediates."
+      },
+      {
+        "title": "Fireship — React in 100 Seconds",
+        "url": "https://youtu.be/Tn6-PIqc4UM",
+        "type": "video",
+        "author": "Fireship",
+        "platform": "YouTube",
+        "description": "Sharp overview of core React concepts."
+      }
+    ]
+  },
+  {
+    "sub_topic_id": "subtopic-003",
+    "sub_topic_name": "State and Event Handling",
+    "source_count": 2,
+    "sources": [
+      {
+        "title": "React Official Documentation",
+        "url": "https://react.dev",
+        "type": "documentation",
+        "author": "React Team",
+        "platform": "react.dev"
+      },
+      {
+        "title": "Scrimba — Learn React for Free",
+        "url": "https://scrimba.com/learn/learnreact",
+        "type": "course",
+        "author": "Bob Ziroll",
+        "platform": "Scrimba"
+      }
+    ]
+  },
+  {
+    "sub_topic_id": "subtopic-004",
+    "sub_topic_name": "Hooks and Side Effects",
+    "source_count": 3,
+    "sources": [
+      {
+        "title": "React Official Documentation",
+        "url": "https://react.dev",
+        "type": "documentation",
+        "author": "React Team",
+        "platform": "react.dev"
+      },
+      {
+        "title": "Jack Herrington — React Hooks Deep Dive",
+        "url": "https://youtube.com/@jherr",
+        "type": "video",
+        "author": "Jack Herrington",
+        "platform": "YouTube"
+      },
+      {
+        "title": "Kent C. Dodds Blog",
+        "url": "https://kentcdodds.com/blog",
+        "type": "article",
+        "author": "Kent C. Dodds",
+        "platform": "Personal Blog"
+      }
+    ]
+  },
+  {
+    "sub_topic_id": "subtopic-005",
+    "sub_topic_name": "React Router",
+    "source_count": 2,
+    "sources": [
+      {
+        "title": "React Router v6 Documentation",
+        "url": "https://reactrouter.com/en/main",
+        "type": "documentation",
+        "author": "Remix Team",
+        "platform": "reactrouter.com"
+      },
+      {
+        "title": "React Official Documentation",
+        "url": "https://react.dev",
+        "type": "documentation",
+        "author": "React Team",
+        "platform": "react.dev"
+      }
+    ]
+  },
+  {
+    "sub_topic_id": "subtopic-006",
+    "sub_topic_name": "State Management",
+    "source_count": 2,
+    "sources": [
+      {
+        "title": "Zustand Documentation",
+        "url": "https://zustand-demo.pmnd.rs",
+        "type": "documentation",
+        "author": "Poimandres",
+        "platform": "GitHub"
+      },
+      {
+        "title": "Kent C. Dodds Blog",
+        "url": "https://kentcdodds.com/blog",
+        "type": "article",
+        "author": "Kent C. Dodds",
+        "platform": "Personal Blog"
+      }
+    ]
+  }
+]
+
+details.total_sources: 14
+
+
+======================================
+PHASE 3 — Quality-Rater Agent Output (YOUR TASK)
+======================================
+
+The Quality-Rater scores each source on credibility, clarity, and level-fit.
+Formula: overall = (credibility * 0.40) + (clarity * 0.35) + (level_fit * 0.25)
+Keep if overall >= 5.0
+
+Finding summary:
+  "Rated 14 sources — 12 kept, 2 discarded"
+
+details.rated: 14
+details.kept: 12
+details.discarded: 2
+details.top_sources:
+[
+  { "title": "React Official Documentation",         "overall_score": 9.1, "sub_topic_name": "JSX and Component Basics" },
+  { "title": "Jack Herrington — React Hooks Deep Dive", "overall_score": 8.7, "sub_topic_name": "Hooks and Side Effects" },
+  { "title": "Kent C. Dodds Blog",                   "overall_score": 8.4, "sub_topic_name": "Hooks and Side Effects" },
+  { "title": "Scrimba — Learn React for Free",       "overall_score": 8.2, "sub_topic_name": "JSX and Component Basics" },
+  { "title": "JavaScript.info — Modern JavaScript",  "overall_score": 8.0, "sub_topic_name": "JavaScript ES6+ Fundamentals" }
+]
+
+Example individual rated source:
+{
+  "source_id": "source-003",
+  "goal_id": "goal-001",
+  "credibility":   9.0,
+  "clarity":       9.0,
+  "level_fit":     8.5,
+  "overall_score": 8.975,
+  "rationale": "react.dev is the official source — maximum credibility.
+                New docs are exceptionally clear with interactive examples.
+                Slightly above beginner but perfect for intermediate level.",
+  "keep": true
+}
+
+Example discarded source:
+{
+  "source_id": "source-011",
+  "goal_id": "goal-001",
+  "credibility":   5.0,
+  "clarity":       4.0,
+  "level_fit":     3.5,
+  "overall_score": 4.275,
+  "rationale": "Generic blog post with no clear author. Explanation is shallow
+                and assumes prior React knowledge — poor level fit for intermediate.",
+  "keep": false    ← overall 4.275 < QUALITY_THRESHOLD (5.0)
+}
+
+
+======================================
+PHASE 4 — Sequencer Agent Output (YOUR TASK — algorithm, no LLM)
+======================================
+
+The Sequencer runs Kahn's topological sort on sub-topics using the
+prerequisites map, then assigns top-rated sources to each module.
+
+Finding summary:
+  "Sequenced 6 modules (22 hrs). Fits 4-week timeline. 0 gaps detected."
+
+details.learning_path_id: "path-001"
+details.total_modules: 6
+details.gaps: []
+details.total_estimated_hours: 22
+details.fits_timeline: true   (22 hrs <= 10 hrs/wk * 4 wks * 1.15 buffer = 46 hrs)
+
+Learning path saved to SQLite (modules in topological order):
+[
+  {
+    "order": 1,
+    "sub_topic_id": "subtopic-001",
+    "sub_topic_name": "JavaScript ES6+ Fundamentals",
+    "objectives": ["Use arrow functions...", "Understand closures...", "Work with ES modules..."],
+    "estimated_hours": 4,
+    "is_gap": false,
+    "sources": [
+      {
+        "title": "JavaScript.info — Modern JavaScript",
+        "url": "https://javascript.info",
+        "type": "article",
+        "overall_score": 8.0,
+        "rationale": "Best free JS reference. Essential prerequisites for React."
+      }
+    ]
+  },
+  {
+    "order": 2,
+    "sub_topic_id": "subtopic-002",
+    "sub_topic_name": "JSX and Component Basics",
+    "objectives": ["Write functional components...", "Understand virtual DOM...", "Pass props..."],
+    "estimated_hours": 3,
+    "is_gap": false,
+    "sources": [
+      {
+        "title": "React Official Documentation",
+        "url": "https://react.dev",
+        "type": "documentation",
+        "overall_score": 9.1,
+        "rationale": "Official source, exceptional clarity, perfect for intermediate."
+      },
+      {
+        "title": "Scrimba — Learn React for Free",
+        "url": "https://scrimba.com/learn/learnreact",
+        "type": "course",
+        "overall_score": 8.2,
+        "rationale": "Interactive coding — ideal complement to documentation."
+      }
+    ]
+  },
+  {
+    "order": 3,
+    "sub_topic_id": "subtopic-003",
+    "sub_topic_name": "State and Event Handling",
+    "estimated_hours": 4,
+    "is_gap": false,
+    "sources": [...]
+  },
+  {
+    "order": 4,
+    "sub_topic_id": "subtopic-005",
+    "sub_topic_name": "React Router",
+    "estimated_hours": 3,
+    "is_gap": false,
+    "sources": [...]
+    NOTE: React Router appears at order 4 (not 5) because its only prerequisite
+          is "JSX and Component Basics" (order 2). Topological sort places it
+          here since it doesn't depend on State or Hooks.
+  },
+  {
+    "order": 5,
+    "sub_topic_id": "subtopic-004",
+    "sub_topic_name": "Hooks and Side Effects",
+    "estimated_hours": 4,
+    "is_gap": false,
+    "sources": [
+      {
+        "title": "Jack Herrington — React Hooks Deep Dive",
+        "overall_score": 8.7
+      },
+      {
+        "title": "Kent C. Dodds Blog",
+        "overall_score": 8.4
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "sub_topic_id": "subtopic-006",
+    "sub_topic_name": "State Management",
+    "estimated_hours": 4,
+    "is_gap": false,
+    "sources": [...]
+  }
+]
+
+
+======================================
+EXAMPLE WITH A GAP — "Kubernetes" topic
+======================================
+
+If the user submits a topic NOT in the mock pool (e.g. "Kubernetes"),
+the Source-Finder falls back to HN search. For some sub-topics it may
+find nothing relevant — the Sequencer should flag these as gaps.
+
+Example gap module:
+{
+  "order": 4,
+  "sub_topic_name": "Kubernetes Operators",
+  "estimated_hours": 3,
+  "is_gap": true,         ← no sources passed QUALITY_THRESHOLD
+  "sources": []
+}
+
+Gap entry in learning_paths.gaps:
+  "Coverage gap: 'Kubernetes Operators' — no quality sources found.
+   Search YouTube for 'Kubernetes Operators tutorial' or check
+   the official Kubernetes docs at kubernetes.io/docs."
+
+
+======================================
+PREREQUISITE ORDER — Why this matters
+======================================
+
+Without topological sort (wrong order):
+  1. State Management       ← WRONG: needs Hooks first
+  2. Hooks and Side Effects
+  3. State and Event Handling
+  4. JSX and Component Basics
+  5. React Router
+  6. JavaScript ES6+        ← WRONG: must be first
+
+With topological sort (correct order):
+  1. JavaScript ES6+        ← no prerequisites
+  2. JSX and Component Basics  ← needs JS only
+  3. State and Event Handling  ← needs JSX
+  4. React Router           ← needs JSX (independent of State)
+  5. Hooks and Side Effects ← needs State
+  6. State Management       ← needs Hooks
+
+A learner following the wrong order will hit concepts they haven't
+learned yet. The Sequencer prevents this.
+
+
+======================================
+SQLITE VERIFICATION COMMANDS
+======================================
+
+After submitting "Learn React", verify each agent worked:
+
+  # Check Scoper saved sub-topics
+  sqlite3 backend/data/learnswarm.db "SELECT name, prerequisites, estimated_hours FROM sub_topics"
+
+  # Check Source-Finder saved sources
+  sqlite3 backend/data/learnswarm.db "SELECT s.title, s.type, st.name FROM sources s JOIN sub_topics st ON s.sub_topic_id = st.id"
+
+  # Check Quality-Rater scores
+  sqlite3 backend/data/learnswarm.db "SELECT s.title, rs.overall_score, rs.keep FROM rated_sources rs JOIN sources s ON rs.source_id = s.id ORDER BY rs.overall_score DESC"
+
+  # Check Sequencer built the path
+  sqlite3 backend/data/learnswarm.db "SELECT total_estimated_hours, fits_timeline, gaps FROM learning_paths"
+
+  # Check all findings
+  sqlite3 backend/data/learnswarm.db "SELECT capability, confidence, summary FROM findings ORDER BY created_at ASC"
+
+Expected flow: 4 findings in order — scoper (confidence ~0.88), source-finder, quality-rater, sequencer (model='algorithm')
